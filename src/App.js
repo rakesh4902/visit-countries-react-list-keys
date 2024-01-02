@@ -84,24 +84,34 @@ class App extends Component {
     countriesVisited: initialCountriesList,
   }
 
-  addVisitedCountry = id => {
+  onClickChangeVisit = id => {
     const {countriesVisited} = this.state
-    const updatedCountry = countriesVisited.map(eachCountry => {
+    const visitCountry = countriesVisited.map(eachCountry => {
       if (eachCountry.id === id) {
-        const updatedList = {...eachCountry, isVisited: !eachCountry.isVisited}
+        const updatedList = {
+          ...eachCountry,
+          isVisited: !eachCountry.isVisited,
+        }
         return updatedList
       }
       return eachCountry
     })
-    this.setState({countriesVisited: updatedCountry})
+    this.setState({countriesVisited: visitCountry})
   }
 
   removeVisitedCountry = id => {
     const {countriesVisited} = this.state
-    const visitedCountry = countriesVisited.filter(
-      eachCountry => eachCountry.id !== id,
-    )
-    this.setState({countriesVisited: visitedCountry})
+    const filteredCountries = countriesVisited.map(eachCountry => {
+      if (eachCountry.id === id) {
+        const removeCountry = {
+          ...eachCountry,
+          isVisited: !eachCountry.isVisited,
+        }
+        return removeCountry
+      }
+      return eachCountry
+    })
+    this.setState({countriesVisited: filteredCountries})
   }
 
   render() {
@@ -115,11 +125,11 @@ class App extends Component {
         <div className="countries-container">
           <h1 className="countries-heading">Countries</h1>
           <ul className="countries-list">
-            {initialCountriesList.map(eachCountry => (
+            {countriesVisited.map(eachCountry => (
               <EachCountry
                 key={eachCountry.id}
                 countryDetails={eachCountry}
-                addVisitedCountry={this.addVisitedCountry}
+                onClickChangeVisit={this.onClickChangeVisit}
               />
             ))}
           </ul>

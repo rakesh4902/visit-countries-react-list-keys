@@ -1,11 +1,11 @@
 import './index.css'
 
 const EachCountry = props => {
-  const {countryDetails, addVisitedCountry} = props
+  const {countryDetails, onClickChangeVisit} = props
   const {id, name, isVisited} = countryDetails
   const countryVisit = isVisited ? 'Visited' : 'Visit'
   const onClickAddCountry = () => {
-    addVisitedCountry(id)
+    onClickChangeVisit(id)
   }
 
   console.log(isVisited)
